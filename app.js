@@ -1,10 +1,32 @@
 const ingredientInput = document.getElementById('ingredient');
 const searchBtn = document.getElementById('searchBtn');
 const recipeList = document.getElementById('recipeList');
-let url = "https://www.themealdb.com/api/json/v1/1/";
 
-/*potential features: get by name - search.php?s=, random meal - random.php, categories.php, filter.php?i=chicken_breast
-*/
-function GetMeal() {
+//https://spoonacular.com/food-api/docs#Search-Recipes-Complex
 
-}
+searchBtn.addEventListener('click', async () => {
+	const query = ingredientInput.value.toLowerCase();
+	if (!query) {
+		alert('Please enter an ingredient!');
+        return;
+	}
+});
+/*
+const url = 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/autocomplete?number=10&query=chicken';
+const options = {
+	method: 'GET',
+	headers: {
+		'x-rapidapi-key': '6eb4be1d02d5454cb6e1e318b46b8762',
+		'x-rapidapi-host': 'spoonacular-recipe-food-nutrition-v1.p.rapidapi.com'
+	}
+};
+
+async function GetMeal(){
+	try {
+		const response = await fetch(url, options);
+		const result = await response.text();
+		console.log(result);
+	} catch (error) {
+		console.error(error);
+	}
+}*/
