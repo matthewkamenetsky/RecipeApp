@@ -1,12 +1,18 @@
 const ingredientInput = document.getElementById('ingredient');
+const ingredientList = document.getElementById('ingredientList');
 const searchBtn = document.getElementById('searchBtn');
+const clearBtn = document.getElementById('clearBtn');
 const recipeList = document.getElementById('recipeList');
 let query = '';
 let recipes = [];
 const apiKey = '6eb4be1d02d5454cb6e1e318b46b8762';
 
+function missingInput() {
+  alert('Please enter input!');
+  return;
+}
+
 function addIngredient(inputValue) {
-  // Check if the input is not empty
   if (inputValue) {
     const listItem = document.createElement('li');
     listItem.textContent = inputValue;
@@ -19,11 +25,6 @@ function addIngredient(inputValue) {
   } else {
     missingInput();
   }
-}
-
-function missingInput() {
-  alert('Please enter input!');
-  return;
 }
 
 // Listen for the 'keydown' event on the input field
@@ -45,15 +46,40 @@ addBtn.addEventListener('click', () => {
   }
 });
 
+async function getMeal(url, options) {
+  try {
+    const response = await fetch(url, options);
+    const result = await response.json();
+
+    recipes = [];
+    recipeList.innerHTML = '';
+    result.forEach((recipe) => {
+      recipes.push(recipe);
+      const listItem = document.createElement('li');
+      listItem.innerHTML = `
+                <h4>${recipe.title}</h4>
+                <a href="recipe-view.html?id=${recipe.id}">
+                  <img class="recipe-img" src="${recipe.image}" alt="${recipe.title}" style="width:90px;height:90px;">
+                </a>
+            `;
+      recipeList.appendChild(listItem);
+    });
+
+    console.log(result);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
 searchBtn.addEventListener('click', async () => {
-  //query = query.toLowerCase();
+  query = query.toLowerCase();
 
   if (!query) {
     missingInput();
   } else {
     const url = `https://api.spoonacular.com/recipes/findByIngredients?ingredients=${encodeURIComponent(
       query
-    )}`;
+    )}&number=50&sort=min-missing-ingredients`;
     const options = {
       method: 'GET',
       headers: {
@@ -64,25 +90,9 @@ searchBtn.addEventListener('click', async () => {
   }
 });
 
-async function getMeal(url, options) {
-  try {
-    const response = await fetch(url, options);
-    const result = await response.json();
-    /*
-		recipes = [];
-		recipeList.innerHTML = '';*/
-    result.forEach((recipe) => {
-      recipes.push(recipe);
-      const listItem = document.createElement('li');
-      listItem.innerHTML = `
-                <h3>${recipe.title}</h3>
-                <img src="${recipe.image}" alt="${recipe.title}" style="width:100px;height:100px;">
-            `;
-      recipeList.appendChild(listItem);
-    });
-
-    console.log(result);
-  } catch (error) {
-    console.error(error);
-  }
-}
+clearBtn.addEventListener('click', () => {
+  ingredientList.innerHTML = '';
+  recipeList.innerHTML = '';
+  query = '';
+  recipes = [];
+});
