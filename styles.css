@@ -1,9 +1,9 @@
-.recipe-img {
+.recipeImg {
   position: relative;
   transition: filter 0.3s ease, opacity 0.3s ease;
 }
 
-.recipe-img:hover {
+.home .recipeImg:hover {
   filter: brightness(0.7);
   opacity: 0.9;
 }

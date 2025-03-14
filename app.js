@@ -59,7 +59,7 @@ async function getMeal(url, options) {
       listItem.innerHTML = `
                 <h4>${recipe.title}</h4>
                 <a href="recipe-view.html?id=${recipe.id}">
-                  <img class="recipe-img" src="${recipe.image}" alt="${recipe.title}" style="width:90px;height:90px;">
+                  <img class="recipeImg" src="${recipe.image}" alt="${recipe.title}" style="width:90px;height:90px;">
                 </a>
             `;
       recipeList.appendChild(listItem);
