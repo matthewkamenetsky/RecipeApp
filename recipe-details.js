@@ -10,7 +10,7 @@ if (recipeId) {
 }
 
 async function fetchRecipeDetails(id) {
-  const apiKey = '6eb4be1d02d5454cb6e1e318b46b8762';
+  const apiKey = process.env.RECIPE_KEY;
   const url = `https://api.spoonacular.com/recipes/${id}/information`;
   const options = {
     method: 'GET',

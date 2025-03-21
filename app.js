@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const ingredientInput = document.getElementById('ingredient');
 const ingredientList = document.getElementById('ingredientList');
 const searchBtn = document.getElementById('searchBtn');
@@ -5,7 +7,7 @@ const clearBtn = document.getElementById('clearBtn');
 const recipeList = document.getElementById('recipeList');
 let query = '';
 let recipes = [];
-const apiKey = '6eb4be1d02d5454cb6e1e318b46b8762';
+const apiKey = process.env.RECIPE_KEY;
 
 function missingInput() {
   alert('Please enter input!');
@@ -27,11 +29,9 @@ function addIngredient(inputValue) {
   }
 }
 
-// Listen for the 'keydown' event on the input field
 ingredientInput.addEventListener('keydown', (event) => {
-  // Check if the Enter key was pressed
   if (event.key === 'Enter') {
-    event.preventDefault(); // Prevent form submission or other default behavior
+    event.preventDefault(); 
     const inputValue = ingredientInput.value.trim();
     addIngredient(inputValue);
   }
