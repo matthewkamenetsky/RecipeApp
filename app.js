@@ -1,5 +1,3 @@
-require('dotenv').config();
-
 const ingredientInput = document.getElementById('ingredient');
 const ingredientList = document.getElementById('ingredientList');
 const searchBtn = document.getElementById('searchBtn');
@@ -7,7 +5,7 @@ const clearBtn = document.getElementById('clearBtn');
 const recipeList = document.getElementById('recipeList');
 let query = '';
 let recipes = [];
-const apiKey = process.env.RECIPE_KEY;
+const apiKey = 'a2b8fcad43fe47828c5c3d3199474aea';
 
 function missingInput() {
   alert('Please enter input!');
