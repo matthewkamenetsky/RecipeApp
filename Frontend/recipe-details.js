@@ -1,5 +1,5 @@
 const params = new URLSearchParams(window.location.search);
-const recipeId = params.get('id'); // Get the recipe ID from URL
+const recipeId = params.get('id');
 const recipeTitle = document.getElementById('recipeTitle');
 const recipeImage = document.querySelector('.recipeImg');
 const recipeInstructions = document.getElementById('recipeInstructions');
@@ -10,17 +10,8 @@ if (recipeId) {
 }
 
 async function fetchRecipeDetails(id) {
-  const apiKey = 'a2b8fcad43fe47828c5c3d3199474aea';
-  const url = `https://api.spoonacular.com/recipes/${id}/information`;
-  const options = {
-    method: 'GET',
-    headers: {
-      'x-api-key': apiKey,
-    },
-  };
-
   try {
-    const response = await fetch(url, options);
+    const response = await fetch(`http://localhost:3000/api/recipe/${id}`);
     const recipe = await response.json();
 
     recipeTitle.textContent = recipe.title;

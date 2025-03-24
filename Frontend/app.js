@@ -5,11 +5,9 @@ const clearBtn = document.getElementById('clearBtn');
 const recipeList = document.getElementById('recipeList');
 let query = '';
 let recipes = [];
-const apiKey = 'a2b8fcad43fe47828c5c3d3199474aea';
 
-function missingInput() {
-  alert('Please enter input!');
-  return;
+function missingInput(input = "input") {
+  return alert(`Please enter ${input}`);
 }
 
 function addIngredient(inputValue) {
@@ -29,7 +27,7 @@ function addIngredient(inputValue) {
 
 ingredientInput.addEventListener('keydown', (event) => {
   if (event.key === 'Enter') {
-    event.preventDefault(); 
+    event.preventDefault();
     const inputValue = ingredientInput.value.trim();
     addIngredient(inputValue);
   }
@@ -44,9 +42,15 @@ addBtn.addEventListener('click', () => {
   }
 });
 
-async function getMeal(url, options) {
+async function getMeal() {
+  query = query.toLowerCase();
+
+  if (!query) {
+    missingInput('ingredients');
+  }
+
   try {
-    const response = await fetch(url, options);
+    const response = await fetch(`http://localhost:3000/api/recipes?ingredients=${query}`);
     const result = await response.json();
 
     recipes = [];
@@ -62,31 +66,12 @@ async function getMeal(url, options) {
             `;
       recipeList.appendChild(listItem);
     });
-
-    console.log(result);
   } catch (error) {
-    console.error(error);
+    console.error('Error fetching recipes:', error);
   }
 }
 
-searchBtn.addEventListener('click', async () => {
-  query = query.toLowerCase();
-
-  if (!query) {
-    missingInput();
-  } else {
-    const url = `https://api.spoonacular.com/recipes/findByIngredients?ingredients=${encodeURIComponent(
-      query
-    )}&number=50&sort=min-missing-ingredients`;
-    const options = {
-      method: 'GET',
-      headers: {
-        'x-api-key': apiKey,
-      },
-    };
-    getMeal(url, options);
-  }
-});
+searchBtn.addEventListener('click', getMeal);
 
 clearBtn.addEventListener('click', () => {
   ingredientList.innerHTML = '';
