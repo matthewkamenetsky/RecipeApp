@@ -35,9 +35,9 @@ app.get('/api/recipes', async (req, res) => {
   }
 });
 
-app.get('/api/recipe/:id', async (req, res) => {  
+app.get('/api/recipe/:id', async (req, res) => {
   try {
-    const {id} = req.params;
+    const { id } = req.params;
     const url = `https://api.spoonacular.com/recipes/${id}/information`;
     const response = await axios.get(url, {
       headers: {
