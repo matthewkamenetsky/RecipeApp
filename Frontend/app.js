@@ -6,14 +6,14 @@ const recipeList = document.getElementById('recipeList');
 let query = '';
 let recipes = [];
 
-function missingInput(input = "input") {
+function missingInput(input = 'input') {
   return alert(`Please enter ${input}`);
 }
 
 function addIngredient(inputValue) {
   if (inputValue) {
     const listItem = document.createElement('li');
-    listItem.textContent = inputValue;
+    listItem.innerHTML = `${inputValue}<span onclick="removeIngredient(this, &quot;${inputValue}&quot;)" class="remove-btn">✖</span>`;
     ingredientList.appendChild(listItem);
     if (query) {
       query += ', ';
@@ -23,6 +23,23 @@ function addIngredient(inputValue) {
   } else {
     missingInput();
   }
+}
+
+function removeIngredient(element, ingredient) {
+  const toRemove = element.parentElement;
+
+  toRemove.style.transition = 'all 0.5s ease';
+  toRemove.style.opacity = '0';
+  toRemove.style.transform = 'translateX(-300px)';
+
+  setTimeout(() => {
+    toRemove.remove();
+    let ingredientsArray = query.split(', ').filter((item) => item !== ingredient);
+    query = ingredientsArray.join(', ');
+
+    recipeList.innerHTML = '';
+    recipes = [];
+  }, 500);
 }
 
 ingredientInput.addEventListener('keydown', (event) => {

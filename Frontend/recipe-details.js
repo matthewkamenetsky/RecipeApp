@@ -20,7 +20,7 @@ async function fetchRecipeDetails(id) {
     recipeIngredients.textContent = 'Ingredients: ';
     recipe.extendedIngredients.forEach((ingredient) => {
       const listItem = document.createElement('li');
-      listItem.textContent = `${ingredient.measures.metric.amount} ${ingredient.measures.metric.unitShort} of ${ingredient.name}`;
+      listItem.textContent = `${ingredient.original}`;
       recipeIngredients.appendChild(listItem);
     });
   } catch (error) {

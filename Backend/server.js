@@ -21,7 +21,7 @@ app.get('/api/recipes', async (req, res) => {
   try {
     const url = `https://api.spoonacular.com/recipes/findByIngredients?ingredients=${encodeURIComponent(
       ingredients
-    )}&number=50&sort=min-missing-ingredients`;
+    )}&number=32&ranking=2`;
     const response = await axios.get(url, {
       headers: {
         'x-api-key': process.env.RECIPE_KEY,
