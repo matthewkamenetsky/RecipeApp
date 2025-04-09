@@ -7,15 +7,23 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <h1 id="recipeTitle">Loading...</h1>
-    <img class="recipeImg" src="" alt="Recipe Image" style="width: 90px; height: 90px" />
-    <p id="recipeInstructions">Fetching instructions...</p>
-    <ul id="recipeIngredients">
-      Fetching ingredients...
-    </ul>
-    <a href="index.html">
-      <button>Back</button>
-    </a>
+    <h1 id="recipeTitle" style="text-align: center">Loading...</h1>
+    <div class="centreContainer">
+      <img class="recipeImg" src="" alt="Recipe Image" style="width: 180px; height: 180px" />
+    </div>
+    <div class="centreContainer">
+      <p id="recipeInstructions">Fetching instructions...</p>
+    </div>
+    <div class="centreContainer">
+      <ul id="recipeIngredients" style="padding: 0">
+        Fetching ingredients...
+      </ul>
+    </div>
+    <div class="centreContainer">
+      <a href="index.html">
+        <button style="width: 200px">Back</button>
+      </a>
+    </div>
 
     <script src="recipe-details.js"></script>
   </body>

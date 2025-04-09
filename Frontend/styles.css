@@ -112,7 +112,6 @@ button:active {
   transform: scale(0.98);
 }
 
-
 .ingredientContainer {
   display: flex;
   justify-content: center;
@@ -145,7 +144,7 @@ button:active {
 }
 
 #ingredientList li:nth-child(even) {
-  background: #f1f1f1; 
+  background: #f1f1f1;
 }
 
 #ingredientList li:last-child {
@@ -153,12 +152,13 @@ button:active {
 }
 
 #ingredientList li:hover {
-  background: #e8f5e9; 
+  background: #e8f5e9;
   transform: translateX(-5px);
 }
 
 .remove-btn {
-  color: #FF4D4D; 
+  all: unset;
+  color: #ff4d4d;
   font-size: 16px;
   padding: 5px;
   cursor: pointer;
@@ -166,11 +166,13 @@ button:active {
 }
 
 .remove-btn:hover {
-  color: #ff2222;  
+  background-color: unset;
+  color: #ff2222;
   transform: scale(1.2);
 }
 
 .recipeImg {
+  margin-top: 20px;
   object-fit: cover;
   position: relative;
   border-radius: 5px;
@@ -202,6 +204,41 @@ button:active {
 
 #recipeList h4 {
   font-weight: normal;
+}
+
+.bookmark {
+  all: unset;
+  font-size: 24px;
+  cursor: pointer;
+  color: #ccc;
+  transition: color 0.3s ease;
+}
+
+.bookmark.bookmarked {
+  color: gold;
+}
+
+.bookmark:hover {
+  background-color: unset;
+  color: orange;
+}
+
+.centreContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.userInfo { 
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.userInfo button, .userInfo input {
+  max-width: 100%;
 }
 
 /*Responsive Design*/
@@ -238,7 +275,7 @@ button:active {
     padding-top: 220px;
   }
 
-  .buttons {
+  .menuButtons {
     display: flex;
     flex-direction: column;
     align-items: center;

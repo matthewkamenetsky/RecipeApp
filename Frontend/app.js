@@ -13,7 +13,7 @@ function missingInput(input = 'input') {
 function addIngredient(inputValue) {
   if (inputValue) {
     const listItem = document.createElement('li');
-    listItem.innerHTML = `${inputValue}<span onclick="removeIngredient(this, &quot;${inputValue}&quot;)" class="remove-btn">✖</span>`;
+    listItem.innerHTML = `${inputValue}<button onclick="removeIngredient(this, '${inputValue}')" class="remove-btn">✖</button>`;
     ingredientList.appendChild(listItem);
     if (query) {
       query += ', ';
@@ -76,11 +76,12 @@ async function getMeal() {
       recipes.push(recipe);
       const listItem = document.createElement('li');
       listItem.innerHTML = `
-                <h4>${recipe.title}</h4>
-                <a href="recipe-view.html?id=${recipe.id}">
-                  <img class="recipeImg" src="${recipe.image}" alt="${recipe.title}" style="width:90px;height:90px;">
-                </a>
-            `;
+                            <a href="recipe-view.html?id=${recipe.id}">
+                              <img class="recipeImg" src="${recipe.image}" alt="${recipe.title}" style="width: 120px; height: 120px">
+                            </a>          
+                            <h4>${recipe.title}</h4>
+                            <button class="bookmark" onClick="toggleBookmark(this)">☆</button>
+                          `;
       recipeList.appendChild(listItem);
     });
   } catch (error) {
@@ -96,3 +97,12 @@ clearBtn.addEventListener('click', () => {
   query = '';
   recipes = [];
 });
+
+function toggleBookmark(button) {
+  button.classList.toggle("bookmarked");
+  if (button.classList.contains("bookmarked")) {
+    button.textContent = "★"; 
+  } else {
+    button.textContent = "☆";
+  }
+}
