@@ -67,7 +67,7 @@ async function getMeal() {
   }
 
   try {
-    const response = await fetch(`http://localhost:3000/api/recipes?ingredients=${query}`);
+    const response = await fetch(`http://localhost:3000/api/search?ingredients=${query}`);
     const result = await response.json();
 
     recipes = [];

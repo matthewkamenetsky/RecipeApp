@@ -23,13 +23,13 @@ router.post('/register', async (req, res) => {
 });
 
 router.post('/login', async (req, res) => {
-  const { email, password } = req.body;
-  db.get(`SELECT * FROM users WHERE email = ?`, [email], async (err, user) => {
+  const { id, password } = req.body;
+  db.get(`SELECT * FROM users WHERE email = ? OR name = ?`, [id, id], async (err, user) => {
     if (err) return res.status(500).json({ error: 'Database error' });
-    if (!user) return res.status(401).json({ error: 'Invalid email or password' });
+    if (!user) return res.status(401).json({ error: 'Invalid id or password' });
 
     const isMatch = await comparePassword(password, user.password);
-    if (!isMatch) return res.status(401).json({ error: 'Invalid email or password' });
+    if (!isMatch) return res.status(401).json({ error: 'Invalid id or password' });
 
     res.status(200).json({ message: 'Login successful', user });
   });
