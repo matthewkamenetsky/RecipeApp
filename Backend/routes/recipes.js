@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const axios = require('axios');
+const db = require('../db');
 
 router.get('/search', async (req, res) => {
   const ingredients = req.query.ingredients;

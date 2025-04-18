@@ -8,13 +8,19 @@ router.post('/register', async (req, res) => {
   try {
     const hashedPassword = await hashPassword(password);
     db.run(
-      `INSERT INTO users (email, name, password, favourites) VALUES (?, ?, ?, ?)`,
+      'INSERT INTO users (email, name, password, favourites) VALUES (?, ?, ?, ?)',
       [email, name, hashedPassword, JSON.stringify([])],
       function (err) {
         if (err) {
           return res.status(500).json({ error: err.message });
         }
-        res.status(201).json({ message: 'User created', userId: this.lastID });
+
+        db.get('SELECT id, email, name, favourites FROM users WHERE id = ?', [this.lastID], (err, user) => {
+          if (err) {
+            return res.status(500).json({ error: 'Error fetching user after creation' });
+          }
+          res.status(201).json({ message: 'User created', user });
+        });
       }
     );
   } catch (err) {
@@ -24,7 +30,7 @@ router.post('/register', async (req, res) => {
 
 router.post('/login', async (req, res) => {
   const { id, password } = req.body;
-  db.get(`SELECT * FROM users WHERE email = ? OR name = ?`, [id, id], async (err, user) => {
+  db.get('SELECT * FROM users WHERE email = ? OR name = ?', [id, id], async (err, user) => {
     if (err) return res.status(500).json({ error: 'Database error' });
     if (!user) return res.status(401).json({ error: 'Invalid id or password' });
 
