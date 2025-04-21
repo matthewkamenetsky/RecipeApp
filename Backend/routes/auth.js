@@ -37,7 +37,8 @@ router.post('/login', async (req, res) => {
     const isMatch = await comparePassword(password, user.password);
     if (!isMatch) return res.status(401).json({ error: 'Invalid id or password' });
 
-    res.status(200).json({ message: 'Login successful', user });
+    const { password: _, ...safeUser} = user;
+    res.status(200).json({ message: 'Login successful', safeUser });
   });
 });
 

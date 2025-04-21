@@ -223,12 +223,6 @@ button:active {
   color: orange;
 }
 
-.centreContainer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 .userInfo { 
   width: 400px;
   display: flex;
