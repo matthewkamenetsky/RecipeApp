@@ -3,8 +3,14 @@ const ingredientList = document.getElementById('ingredientList');
 const searchBtn = document.getElementById('searchBtn');
 const clearBtn = document.getElementById('clearBtn');
 const recipeList = document.getElementById('recipeList');
+const user = JSON.parse(sessionStorage.getItem('user'));
 let query = '';
 let recipes = [];
+let favourites = Array.isArray(user?.favourites)
+  ? user.favourites
+  : typeof user?.favourites === 'string'
+  ? JSON.parse(user.favourites)
+  : [];
 
 function missingInput(input = 'input') {
   return alert(`Please enter ${input}`);
@@ -13,7 +19,7 @@ function missingInput(input = 'input') {
 function addIngredient(inputValue) {
   if (inputValue) {
     const listItem = document.createElement('li');
-    listItem.innerHTML = `${inputValue}<button onclick="removeIngredient(this, '${inputValue}')" class="remove-btn">✖</button>`;
+    listItem.innerHTML = `${inputValue}<button onclick='removeIngredient(this, "${inputValue}")' class='remove-btn'>✖</button>`;
     ingredientList.appendChild(listItem);
     if (query) {
       query += ', ';
@@ -74,13 +80,18 @@ async function getMeal() {
     recipeList.innerHTML = '';
     result.forEach((recipe) => {
       recipes.push(recipe);
+
+      const isFavourited = favourites.includes(recipe.id);
+      const starSymbol = isFavourited ? '★' : '☆';
+      const starClass = isFavourited ? 'favourite favourited' : 'favourite';
+
       const listItem = document.createElement('li');
       listItem.innerHTML = `
-                            <a href="recipe-view.html?id=${recipe.id}">
-                              <img class="recipeImg" src="${recipe.image}" alt="${recipe.title}" style="width: 120px; height: 120px">
+                            <a href='recipe-view.html?id=${recipe.id}'>
+                              <img class='recipeImg' src='${recipe.image}' alt='${recipe.title}' style='width: 120px; height: 120px'>
                             </a>          
                             <h4>${recipe.title}</h4>
-                            <button class="bookmark" onClick="toggleBookmark(this)">☆</button>
+                            <button class='${starClass}' onclick='toggleFavourite(this, ${recipe.id})'>${starSymbol}</button>
                           `;
       recipeList.appendChild(listItem);
     });
@@ -98,11 +109,27 @@ clearBtn.addEventListener('click', () => {
   recipes = [];
 });
 
-function toggleBookmark(button) {
-  button.classList.toggle("bookmarked");
-  if (button.classList.contains("bookmarked")) {
-    button.textContent = "★"; 
-  } else {
-    button.textContent = "☆";
+function toggleFavourite(button, recipeId) {
+  if (!user) {
+    alert('You must be logged in to favourite recipes.');
+    return;
   }
+
+  isFavourited = button.classList.toggle('favourited');
+  button.textContent = isFavourited ? '★' : '☆';
+  favourites = isFavourited ? [...favourites, recipeId] : favourites.filter((id) => id !== recipeId);
+  user.favourites = favourites;
+  sessionStorage.setItem('user', JSON.stringify(user));
 }
+
+window.addEventListener('beforeunload', () => {
+  if (user) {
+    fetch(`http://localhost:3000/api/users/${user.id}/favourites`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ favourites: user.favourites }),
+    })
+  }
+});

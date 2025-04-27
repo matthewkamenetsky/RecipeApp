@@ -56,6 +56,7 @@ router.get('/users/:id/favourites', (req, res) => {
   });
 });
 
+/*
 router.patch('/users/:id/favourites', (req, res) => {
   const userId = req.params.id;
   const { recipeId } = req.body;
@@ -90,6 +91,20 @@ router.delete('/users/:id/favourites', (req, res) => {
       res.status(200).json({ message: 'Recipe unfavourited', favourites: currentFavourites });
     });
   });
+});*/
+
+router.post('/users/:id/favourites', (req, res) => {
+  const userId = req.params.id;
+  const favourites = req.body.favourites;
+
+  if (!Array.isArray(favourites)) {
+    return res.status(400).json({ error: 'Favourites must be an array.' });
+  }
+
+  db.run('UPDATE users SET favourites = ? WHERE id = ?', [JSON.stringify(favourites), userId], (err) => {
+    if (err) return res.status(500).json({ error: 'Failed to update favourites' });
+    res.status(200).json({ message: 'Favourites updated', favourites });
+  })
 });
 
 module.exports = router;

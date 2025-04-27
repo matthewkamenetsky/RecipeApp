@@ -206,7 +206,7 @@ button:active {
   font-weight: normal;
 }
 
-.bookmark {
+.favourite {
   all: unset;
   font-size: 24px;
   cursor: pointer;
@@ -214,11 +214,11 @@ button:active {
   transition: color 0.3s ease;
 }
 
-.bookmark.bookmarked {
+.favourite.favourited {
   color: gold;
 }
 
-.bookmark:hover {
+.favourite:hover {
   background-color: unset;
   color: orange;
 }
