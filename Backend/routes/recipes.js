@@ -44,6 +44,7 @@ router.get('/recipe/:id', async (req, res) => {
   }
 });
 
+/*
 router.get('/users/:id/favourites', (req, res) => {
   const userId = req.params.id;
 
@@ -53,43 +54,6 @@ router.get('/users/:id/favourites', (req, res) => {
 
     const favourites = row.favourites ? JSON.parse(row.favourites) : [];
     res.status(200).json({ favourites });
-  });
-});
-
-/*
-router.patch('/users/:id/favourites', (req, res) => {
-  const userId = req.params.id;
-  const { recipeId } = req.body;
-
-  db.get(`SELECT favourites FROM users WHERE id = ?`, [userId], (err, row) => {
-    if (err) return res.status(500).json({ error: 'Database error' });
-    if (!row) return res.status(404).json({ error: 'User not found' });
-
-    const currentFavourites = row.favourites ? JSON.parse(row.favourites) : [];
-    if (!currentFavourites.includes(recipeId)) currentFavourites.push(recipeId);
-
-    db.run(`UPDATE users SET favourites = ? WHERE id = ?`, [JSON.stringify(currentFavourites), userId], (err) => {
-      if (err) return res.status(500).json({ error: 'Failed to update favourites' });
-      res.status(200).json({ message: 'Recipe favourited', favourites: currentFavourites });
-    });
-  });
-});
-
-router.delete('/users/:id/favourites', (req, res) => {
-  const userId = req.params.id;
-  const { recipeId } = req.body;
-
-  db.get(`SELECT favourites FROM users WHERE id = ?`, [userId], (err, row) => {
-    if (err) return res.status(500).json({ error: 'Database error' });
-    if (!row) return res.status(404).json({ error: 'User not found' });
-
-    let currentFavourites = row.favourites ? JSON.parse(row.favourites) : [];
-    currentFavourites = currentFavourites.filter((id) => id !== recipeId);
-
-    db.run(`UPDATE users SET favourites = ? WHERE id = ?`, [JSON.stringify(currentFavourites), userId], (err) => {
-      if (err) return res.status(500).json({ error: 'Failed to update favourites' });
-      res.status(200).json({ message: 'Recipe unfavourited', favourites: currentFavourites });
-    });
   });
 });*/
 
@@ -104,7 +68,7 @@ router.post('/users/:id/favourites', (req, res) => {
   db.run('UPDATE users SET favourites = ? WHERE id = ?', [JSON.stringify(favourites), userId], (err) => {
     if (err) return res.status(500).json({ error: 'Failed to update favourites' });
     res.status(200).json({ message: 'Favourites updated', favourites });
-  })
+  });
 });
 
 module.exports = router;

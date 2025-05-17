@@ -130,6 +130,6 @@ window.addEventListener('beforeunload', () => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ favourites: user.favourites }),
-    })
+    });
   }
 });
