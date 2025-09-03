@@ -44,19 +44,6 @@ router.get('/recipe/:id', async (req, res) => {
   }
 });
 
-/*
-router.get('/users/:id/favourites', (req, res) => {
-  const userId = req.params.id;
-
-  db.get(`SELECT favourites FROM users WHERE id = ?`, [userId], (err, row) => {
-    if (err) return res.status(500).json({ error: 'Database error' });
-    if (!row) return res.status(404).json({ error: 'User not found' });
-
-    const favourites = row.favourites ? JSON.parse(row.favourites) : [];
-    res.status(200).json({ favourites });
-  });
-});*/
-
 router.post('/users/:id/favourites', (req, res) => {
   const userId = req.params.id;
   const favourites = req.body.favourites;
