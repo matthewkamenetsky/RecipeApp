@@ -1,4 +1,5 @@
 document.getElementById('registerForm').addEventListener('submit', async (e) => {
+  const API_URL = process.env.APP_API_URL;
   e.preventDefault();
 
   try {
@@ -9,7 +10,7 @@ document.getElementById('registerForm').addEventListener('submit', async (e) => 
       password: formData.get('password'),
     };
 
-    const res = await fetch('http://localhost:3000/api/register', {
+    const res = await fetch(`${API_URL}/api/register`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data),

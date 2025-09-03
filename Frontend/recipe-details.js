@@ -4,6 +4,7 @@ const recipeTitle = document.getElementById('recipeTitle');
 const recipeImage = document.querySelector('.recipeImg');
 const recipeInstructions = document.getElementById('recipeInstructions');
 const recipeIngredients = document.getElementById('recipeIngredients');
+const API_URL = process.env.APP_API_URL;
 
 if (recipeId) {
   fetchRecipeDetails(recipeId);
@@ -11,7 +12,7 @@ if (recipeId) {
 
 async function fetchRecipeDetails(id) {
   try {
-    const response = await fetch(`http://localhost:3000/api/recipe/${id}`);
+    const response = await fetch(`${API_URL}/api/recipe/${id}`);
     const recipe = await response.json();
 
     recipeTitle.textContent = recipe.title;

@@ -4,6 +4,7 @@ const searchBtn = document.getElementById('searchBtn');
 const clearBtn = document.getElementById('clearBtn');
 const recipeList = document.getElementById('recipeList');
 const user = JSON.parse(sessionStorage.getItem('user'));
+const API_URL = process.env.APP_API_URL;
 let query = '';
 let recipes = [];
 let favourites = Array.isArray(user?.favourites)
@@ -73,7 +74,7 @@ async function getMeal() {
   }
 
   try {
-    const response = await fetch(`http://localhost:3000/api/search?ingredients=${query}`);
+    const response = await fetch(`${API_URL}/api/search?ingredients=${query}`);
     const result = await response.json();
 
     recipes = [];
@@ -124,7 +125,7 @@ function toggleFavourite(button, recipeId) {
 
 window.addEventListener('beforeunload', () => {
   if (user) {
-    fetch(`http://localhost:3000/api/users/${user.id}/favourites`, {
+    fetch(`${API_URL}/api/users/${user.id}/favourites`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

@@ -1,5 +1,6 @@
 const recipeList = document.getElementById('recipeList');
 const user = JSON.parse(sessionStorage.getItem('user'));
+const API_URL = process.env.APP_API_URL;
 let favourites = Array.isArray(user?.favourites)
   ? user.favourites
   : typeof user?.favourites === 'string'
@@ -13,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
 async function displayFavourites() {
   try {
     for (const id of favourites) {
-      const response = await fetch(`http://localhost:3000/api/recipe/${id}`);
+      const response = await fetch(`${API_URL}/api/recipe/${id}`);
       const recipe = await response.json();
       const starSymbol = '★';
       const starClass = 'favourite favourited';
@@ -48,7 +49,7 @@ function toggleFavourite(button, recipeId) {
 
 window.addEventListener('beforeunload', () => {
   if (user) {
-    fetch(`http://localhost:3000/api/users/${user.id}/favourites`, {
+    fetch(`${API_URL}/api/users/${user.id}/favourites`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
