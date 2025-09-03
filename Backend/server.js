@@ -14,5 +14,8 @@ app.use(express.json());
 app.use('/api', authRoutes);
 app.use('/api', recipeRoutes);
 app.use(express.static(path.join(__dirname, '../Frontend')));
+app.get('/', (req, res) => {
+  res.sendFile(path.join(frontendPath, 'register.html'));
+});
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
