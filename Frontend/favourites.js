@@ -1,6 +1,9 @@
 const recipeList = document.getElementById('recipeList');
 const user = JSON.parse(sessionStorage.getItem('user'));
-const API_URL = process.env.APP_API_URL;
+const API_URL =
+    window.location.hostname === 'localhost'
+      ? 'http://localhost:3000'
+      : 'https://your-backend.onrender.com';
 let favourites = Array.isArray(user?.favourites)
   ? user.favourites
   : typeof user?.favourites === 'string'

@@ -1,5 +1,8 @@
 document.getElementById('loginForm').addEventListener('submit', async (e) => {
-  const API_URL = process.env.APP_API_URL;
+  const API_URL =
+    window.location.hostname === 'localhost'
+      ? 'http://localhost:3000'
+      : 'https://your-backend.onrender.com';
   e.preventDefault();
 
   try {

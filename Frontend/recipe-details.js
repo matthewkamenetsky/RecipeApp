@@ -4,7 +4,10 @@ const recipeTitle = document.getElementById('recipeTitle');
 const recipeImage = document.querySelector('.recipeImg');
 const recipeInstructions = document.getElementById('recipeInstructions');
 const recipeIngredients = document.getElementById('recipeIngredients');
-const API_URL = process.env.APP_API_URL;
+const API_URL =
+    window.location.hostname === 'localhost'
+      ? 'http://localhost:3000'
+      : 'https://your-backend.onrender.com';
 
 if (recipeId) {
   fetchRecipeDetails(recipeId);
