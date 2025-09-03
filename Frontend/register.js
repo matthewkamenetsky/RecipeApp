@@ -2,7 +2,7 @@ document.getElementById('registerForm').addEventListener('submit', async (e) => 
   const API_URL =
     window.location.hostname === 'localhost'
       ? 'http://localhost:3000'
-      : 'https://your-backend.onrender.com';
+      : 'https://recipeapp-g8h2.onrender.com';
   e.preventDefault();
 
   try {

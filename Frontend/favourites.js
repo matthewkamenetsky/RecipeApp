@@ -3,7 +3,7 @@ const user = JSON.parse(sessionStorage.getItem('user'));
 const API_URL =
     window.location.hostname === 'localhost'
       ? 'http://localhost:3000'
-      : 'https://your-backend.onrender.com';
+      : 'https://recipeapp-g8h2.onrender.com';
 let favourites = Array.isArray(user?.favourites)
   ? user.favourites
   : typeof user?.favourites === 'string'
