@@ -13,7 +13,8 @@ app.use(cors());
 app.use(express.json());
 app.use('/api', authRoutes);
 app.use('/api', recipeRoutes);
-app.use(express.static(path.join(__dirname, '../Frontend')));
+const frontendPath = path.join(__dirname, '../Frontend');
+app.use(express.static(frontendPath));
 app.get('/', (req, res) => {
   res.sendFile(path.join(frontendPath, 'register.html'));
 });
